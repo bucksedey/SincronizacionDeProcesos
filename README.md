@@ -1,2 +1,11 @@
 # SincronizacionDeProcesos
 Este código implementa un mecanismo de sincronización de procesos utilizando memoria compartida en un sistema operativo UNIX.
+
+Este código implementa un mecanismo de sincronización de procesos utilizando memoria compartida en un sistema operativo UNIX. En este mecanismo, dos procesos comparten una región de memoria y utilizan un puntero de carácter como variable de control para sincronizar sus acciones.
+En primer lugar, se declaran las variables necesarias, incluyendo el identificador de la región de memoria compartida (shmid), el identificador del proceso (pid), un puntero a la región de memoria compartida (addr) y un puntero a un carácter que se utiliza para controlar el turno (turno).
+Luego se crea la región de memoria compartida utilizando la función shmget(), y se enlaza al espacio de direccionamiento del proceso utilizando la función shmat(). Se establece el valor inicial del turno como '0', lo que significa que el primer proceso en ejecutarse tendrá el control.
+A continuación, se implementa un ciclo while que se ejecutará continuamente. En este ciclo, se utiliza un ciclo while interno para esperar a que sea el turno del proceso actual. Cuando el turno llega, el proceso entra en la región crítica y realiza sus tareas críticas, después cambia el turno para que el otro proceso tenga el control y ejecuta sus tareas no críticas.
+La región crítica se implementa en la función region_critica(), que simplemente imprime una serie de mensajes por pantalla para simular tareas críticas. La región no crítica se implementa en la función region_no_critica(), que también imprime un mensaje por pantalla.
+Finalmente, se separa la región de memoria compartida del espacio de direccionamiento del proceso utilizando la función shmdt() y se elimina la región de memoria compartida utilizando la función shmctl(). En resumen, este código implementa un mecanismo de sincronización de procesos utilizando memoria compartida en un sistema operativo UNIX, que permite a dos procesos ejecutarse de forma intercalada en regiones críticas y no críticas.
+
+Es importante mencionar que este código no correrá en S.O. Windows, debido a que no cuenta con las librerías necesarias para correrlo y es recomendable correrlo en un Sistema Operativo UNIX como Linux.
